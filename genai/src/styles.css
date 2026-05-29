@@ -1,0 +1,193 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-tertiary: var(--tertiary);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --radius: 0;
+  /* Technical terminal — dark, mono, teal accent */
+  --background: oklch(0.16 0.005 240);          /* near #0a0a0a */
+  --foreground: oklch(0.96 0.003 240);          /* zinc-100 */
+  --muted: oklch(0.22 0.004 240);               /* zinc-900-ish */
+  --muted-foreground: oklch(0.62 0.006 240);    /* zinc-500 */
+  --tertiary: oklch(0.42 0.005 240);            /* zinc-700 */
+  --border: oklch(0.28 0.005 240);              /* zinc-800 */
+  --rule: oklch(0.28 0.005 240);                /* zinc-800 */
+  --accent: oklch(0.78 0.13 190);               /* teal */
+  --card: var(--background);
+  --card-foreground: var(--foreground);
+  --popover: var(--background);
+  --popover-foreground: var(--foreground);
+  --primary: var(--foreground);
+  --primary-foreground: var(--background);
+  --secondary: var(--muted);
+  --secondary-foreground: var(--foreground);
+  --accent-foreground: var(--background);
+  --destructive: oklch(0.55 0.2 25);
+  --destructive-foreground: oklch(0.99 0 0);
+  --input: var(--border);
+  --ring: var(--foreground);
+}
+
+.dark {
+  /* same as :root (terminal is default) */
+}
+
+.light {
+  --background: oklch(0.985 0.003 90);          /* near-white paper */
+  --foreground: oklch(0.18 0.005 240);          /* near-black ink */
+  --muted: oklch(0.95 0.003 90);                /* zinc-100 */
+  --muted-foreground: oklch(0.45 0.006 240);    /* zinc-600 */
+  --tertiary: oklch(0.65 0.005 240);            /* zinc-400 */
+  --border: oklch(0.88 0.004 90);
+  --rule: oklch(0.84 0.004 90);
+  --accent: oklch(0.52 0.13 195);               /* darker teal for AA contrast */
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: "IBM Plex Mono", ui-monospace, "JetBrains Mono", "SF Mono", Menlo, monospace;
+    font-weight: 400;
+    font-feature-settings: "tnum";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.55;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.2;
+  }
+  ::selection { background: var(--color-foreground); color: var(--color-background); }
+}
+
+@layer utilities {
+  .label {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--color-muted-foreground);
+  }
+  .label-accent {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: color-mix(in oklab, var(--color-accent) 12%, transparent);
+    color: var(--color-accent);
+  }
+  .chip {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 2px 8px;
+    border-radius: 3px;
+    border: 0.5px solid var(--color-rule);
+    color: var(--color-muted-foreground);
+    text-transform: uppercase;
+  }
+  .chip-live {
+    color: var(--color-accent);
+    border-color: color-mix(in oklab, var(--color-accent) 40%, transparent);
+    background: color-mix(in oklab, var(--color-accent) 10%, transparent);
+  }
+  .row-hover { transition: background-color 150ms ease; }
+  .row-hover:hover { background-color: color-mix(in oklab, var(--color-muted) 50%, transparent); }
+  .num {
+    font-variant-numeric: tabular-nums;
+    color: var(--color-tertiary);
+  }
+  .rule-t { border-top: 0.5px solid var(--color-rule); }
+  .rule-b { border-bottom: 0.5px solid var(--color-rule); }
+  .rule-l { border-left: 0.5px solid var(--color-rule); }
+  .rule-r { border-right: 0.5px solid var(--color-rule); }
+  .hover-underline {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 3px;
+    transition: text-decoration-color 150ms ease;
+  }
+  .hover-underline:hover { text-decoration-color: currentColor; }
+  .fade-in { animation: fadeIn 400ms ease both; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: none; }
+  }
+  .prose-editorial p { margin: 1em 0; }
+  .prose-editorial h2 { font-size: 1.25rem; margin: 2em 0 0.6em; font-weight: 500; }
+  .prose-editorial h3 { font-size: 1.05rem; margin: 1.6em 0 0.4em; font-weight: 500; }
+  .prose-editorial a { text-decoration: underline; text-underline-offset: 3px; }
+  .prose-editorial code {
+    font-family: ui-monospace, "JetBrains Mono", "SF Mono", Menlo, monospace;
+    font-size: 0.9em;
+    background: var(--color-muted);
+    padding: 0.1em 0.35em;
+  }
+  .prose-editorial pre {
+    background: var(--color-muted);
+    padding: 1rem;
+    overflow-x: auto;
+    font-size: 0.85rem;
+    border: 0.5px solid var(--color-rule);
+  }
+  .prose-editorial pre code { background: transparent; padding: 0; }
+  .prose-editorial ul, .prose-editorial ol { padding-left: 1.5em; margin: 1em 0; }
+  .prose-editorial blockquote {
+    border-left: 0.5px solid var(--color-rule);
+    padding-left: 1rem;
+    color: var(--color-muted-foreground);
+    margin: 1.2em 0;
+  }
+  .prose-editorial hr { border: none; border-top: 0.5px solid var(--color-rule); margin: 2em 0; }
+}
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; color: black; }
+  a { color: black; text-decoration: none; }
+  .rule-t, .rule-b { border-color: #999 !important; }
+}
