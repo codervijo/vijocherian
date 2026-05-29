@@ -1,0 +1,25 @@
+---
+// Shared <head> chrome: charset, viewport, global styles, fonts, and the
+// no-FOUC theme bootstrap. Page-specific SEO meta (title/description/OG/
+// JSON-LD) is written per-page so it can be asserted statically.
+import "../styles/global.css";
+---
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="preconnect" href="https://rsms.me/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap"
+/>
+
+<script is:inline>
+  // Apply stored theme before first paint (terminal/dark is the default).
+  (function () {
+    try {
+      var t = localStorage.getItem("theme") || "dark";
+      document.documentElement.classList.toggle("light", t === "light");
+    } catch (e) {}
+  })();
+</script>

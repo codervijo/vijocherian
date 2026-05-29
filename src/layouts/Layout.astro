@@ -1,0 +1,55 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;
+  ogType?: string;
+  ogUrl?: string;
+  jsonLd?: unknown;
+}
+
+const {
+  title,
+  description = "",
+  canonical,
+  ogType = "website",
+  ogUrl,
+  jsonLd,
+} = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Vijo Cherian" />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="Vijo Cherian" />
+    {ogUrl && <meta property="og:url" content={ogUrl} />}
+    <meta name="twitter:card" content="summary" />
+    {
+      jsonLd && (
+        <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+      )
+    }
+  </head>
+  <body>
+    <div class="min-h-screen flex flex-col">
+      <Header />
+      <main class="flex-1">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+  </body>
+</html>

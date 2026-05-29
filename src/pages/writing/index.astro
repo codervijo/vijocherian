@@ -1,0 +1,43 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { posts, formatDate, formatNum } from "../../lib/content";
+---
+<Layout
+  title="Writing — Vijo Cherian"
+  description="Essays on building, search, and creator tools."
+  canonical="https://vijocherian.com/writing"
+  ogUrl="https://vijocherian.com/writing"
+>
+  <div class="mx-auto max-w-3xl px-6 fade-in">
+    <header class="pt-16 pb-10">
+      <p class="label mb-4">[02] &nbsp; Writing</p>
+      <h1 class="text-2xl sm:text-3xl tracking-tight max-w-2xl">
+        Occasional notes on shipping things, search, and the parts of building that don't make it
+        into pitch decks.
+      </h1>
+    </header>
+
+    <ul class="rule-t">
+      {
+        posts.map((p, i) => (
+          <li class="rule-b py-6">
+            <a
+              href={`/writing/${p.slug}`}
+              class="grid grid-cols-[2.5rem_1fr_auto] gap-4 items-baseline group"
+            >
+              <span class="num text-sm">{formatNum(i + 1)}</span>
+              <div>
+                <div class="text-base font-medium group-hover:underline underline-offset-4">
+                  {p.title}
+                </div>
+                <div class="text-sm text-muted-foreground mt-1 max-w-xl">{p.description}</div>
+                <div class="text-xs num mt-2">{p.readingTime}</div>
+              </div>
+              <span class="num text-xs whitespace-nowrap">{formatDate(p.date)}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Layout>

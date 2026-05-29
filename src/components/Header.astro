@@ -1,0 +1,68 @@
+---
+const items = [
+  { to: "/", label: "Index" },
+  { to: "/projects", label: "Projects" },
+  { to: "/writing", label: "Writing" },
+] as const;
+
+const pathname = Astro.url.pathname;
+function isActive(to: string): boolean {
+  if (to === "/") return pathname === "/";
+  return pathname === to || pathname.startsWith(to + "/");
+}
+---
+<header class="no-print rule-b">
+  <div class="mx-auto max-w-3xl px-6 py-5 flex items-baseline justify-between gap-6">
+    <a
+      href="/"
+      class="text-sm font-semibold tracking-tight uppercase text-foreground hover-underline"
+    >
+      Vijo Cherian
+    </a>
+    <nav class="flex items-baseline gap-7 text-[10px] uppercase tracking-[0.2em] font-medium">
+      {
+        items.map((it) => (
+          <a
+            href={it.to}
+            class:list={[
+              "transition-colors hover:text-[var(--color-accent)]",
+              isActive(it.to) ? "text-foreground" : "text-muted-foreground",
+            ]}
+          >
+            {it.label}
+          </a>
+        ))
+      }
+      <button
+        type="button"
+        id="theme-toggle"
+        aria-label="Toggle theme"
+        class="transition-colors hover:text-[var(--color-accent)] text-muted-foreground"
+      >
+        Light
+      </button>
+    </nav>
+  </div>
+</header>
+
+<script is:inline>
+  (function () {
+    var btn = document.getElementById("theme-toggle");
+    if (!btn) return;
+    function current() {
+      return document.documentElement.classList.contains("light") ? "light" : "dark";
+    }
+    function label() {
+      btn.textContent = current() === "dark" ? "Light" : "Dark";
+    }
+    label();
+    btn.addEventListener("click", function () {
+      var next = current() === "dark" ? "light" : "dark";
+      document.documentElement.classList.toggle("light", next === "light");
+      try {
+        localStorage.setItem("theme", next);
+      } catch (e) {}
+      label();
+    });
+  })();
+</script>

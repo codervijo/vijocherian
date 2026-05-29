@@ -1,0 +1,64 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { projects, formatNum, type ProjectStatus } from "../lib/content";
+
+const statusOrder: ProjectStatus[] = ["live", "building", "paused", "idea"];
+const sorted = [...projects].sort(
+  (a, b) => statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status),
+);
+
+function dotColor(status: ProjectStatus): string {
+  return status === "live"
+    ? "var(--color-foreground)"
+    : status === "building"
+      ? "var(--color-accent)"
+      : status === "paused"
+        ? "var(--color-tertiary)"
+        : "transparent";
+}
+---
+<Layout
+  title="Projects — Vijo Cherian"
+  description="An archive of projects, shipped and unshipped."
+  canonical="https://vijocherian.com/projects"
+  ogUrl="https://vijocherian.com/projects"
+>
+  <div class="mx-auto max-w-3xl px-6 fade-in">
+    <header class="pt-16 pb-10">
+      <p class="label mb-4">[01] &nbsp; Projects</p>
+      <h1 class="text-2xl sm:text-3xl tracking-tight max-w-2xl">
+        A working archive. Some live, some in progress, some shelved. Updated as things change.
+      </h1>
+    </header>
+
+    <div class="grid grid-cols-[2.5rem_1fr_5rem_5rem] gap-4 label rule-t rule-b py-3">
+      <span>№</span>
+      <span>Project</span>
+      <span>Year</span>
+      <span class="text-right">Status</span>
+    </div>
+
+    <ul>
+      {
+        sorted.map((p, i) => (
+          <li class="rule-b py-5 grid grid-cols-[2.5rem_1fr_5rem_5rem] gap-4 items-baseline">
+            <span class="num text-sm">{formatNum(i + 1)}</span>
+            <div>
+              <div class="text-base font-medium">{p.name}</div>
+              <div class="text-sm text-muted-foreground mt-0.5">{p.description}</div>
+            </div>
+            <span class="num text-sm">{p.year}</span>
+            <span class="text-right text-sm">
+              <span
+                aria-hidden
+                class="inline-block w-1.5 h-1.5 mr-1.5 align-middle"
+                style={`background: ${dotColor(p.status)}; border: ${p.status === "idea" ? "0.5px solid var(--color-tertiary)" : "none"}`}
+              />
+              {p.status}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Layout>
