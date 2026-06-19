@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vijocherian.com/sitemap.xml
+Sitemap: https://vijocherian.com/sitemap-index.xml
